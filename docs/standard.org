@@ -1,0 +1,33 @@
+#+Title: Standardisering
+#+date: 13.11.2020
+
+#+options: ^:nil
+#+OPTIONS: html-postamble:nil
+#+LANGUAGE: no
+
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/setup/theme-bigblow.setup
+
+* Raw data
+
+Raw data for 2 GEO som eksample. De ser slik ut:
+
+#+begin_example
+  > dt30
+  GEO ALDER TELLER     RATE i.GEO case    i.RATE     crude
+  1:  30 15_19  37051 6.060799    30  177  4.768512  4.777199
+  2:  30 20_24  32828 5.370001    30  499 15.133824 15.200439
+  3:  30 25_29  34457 5.636473    30  669 19.456630 19.415503
+  4:  30 30_34  37431 6.122960    30  612 16.139241 16.350084
+  5:  30 35_39  40201 6.576076    30  453 11.198042 11.268376
+  6:  30 40_44  42423 6.939551    30  190  4.508994  4.478703
+  > dt50
+  GEO ALDER TELLER     RATE i.GEO case    i.RATE     crude
+  1:  50 15_19  13520 5.897440    50   75  5.560911  5.547337
+  2:  50 20_24  16125 7.033745    50  205 12.799034 12.713178
+  3:  50 25_29  16537 7.213459    50  248 14.965152 14.996674
+  4:  50 30_34  15039 6.560030    50  239 15.716102 15.892014
+  5:  50 35_39  13964 6.091114    50  146 10.324101 10.455457
+  6:  50 40_44  13851 6.041823    50   47  3.419301  3.393257
+#+end_example
+
+For å hente =csv= filer, kan leses fra denne [[https://github.com/ybkamaleri/test-code/tree/main/standard][Github]] side.
