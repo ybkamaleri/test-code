@@ -1,0 +1,441 @@
+---
+title: "SSB - døde"
+output:
+  html_document:
+    df_print: paged
+    toc: yes
+    number_sections: true
+    toc_float: true
+    toc_depth: 2
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+author: Hanna Helgeland
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+options(scipen = 2)
+options(digits = 2)
+```
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+```
+
+## Bakgrunn  
+
+Flere tabeller vi får fra SSB inneholder en kolonne med et tall (1:9) og en boksav (B,C), eks. 2A.  
+
+Den inneholder informasjon om hvilken landbakgrunn (evt. verdensdel), kodet 0-9 (der 0=Norge), og,   
+•	dersom annen landbakgrunn enn Norge, innvandringskategori:   
+•	B=Innvandrer (dvs. født i utlandet)  
+•	C=Norskfødt med to innvandrerforeldre  
+
+
+Hensikten med koden er 
+
+1.	Detektere om filen inneholder en slik kombi-variabel for landbakgrunn og innvandringskategori.   
+Navnet kan variere, så man må se etter verdiene. Det vil nok variere fra datakilde til datakilde hvilke verdier som er med. 
+Én verdi vil nok alltid være med: 
+•	"0"=norsk (minst én norskfødt forelder) 
+I tillegg vil én eller flere av de andre verdiene være representert (enten 1B, 1C, 2B, ..., 9B eller 9C)  
+  
+2.	Erstatte kombi-variabelen med to nye variabler, "landbak" (med de numeriske verdiene) og "innvand" (med bokstav-verdiene)  
+
+<br>
+
+
+## Dependencies
+
+koden forutsetter pakken 'tidyverse'
+```{r}
+library(tidyverse)
+```
+
+
+## Data
+
+ORGDATA  
+F:\Prosjekter\Kommunehelsa\PRODUKSJON\ORGDATA\SSB\DODE_SSB\ORG\2021\G42019v2.csv
+
+```{r}
+# Orgdata
+dode <- read_delim(file = "F:/Prosjekter/Kommunehelsa/PRODUKSJON/ORGDATA/SSB/DODE_SSB/ORG/2021/G42019v2.csv", 
+                   delim = ";", locale = locale(encoding = 'ISO-8859-15'))
+
+
+```
+
+
+<br>
+
+## Separate if
+
+Testdata inneholder de 10 første linjene av DODE.  
+
+I kombikolonnen har jeg lagt inn en feil "1Blyant", som gir et delvis treff. For å forhindre at slike feil blir usynlige skal 'separate' smelte sammen det som blir til overs, så i dette tilfelle splittes "1" og "Blyant". Uten denne 'extra = "merge"', ville resultatet av "1Blyant" blitt "1" og "B".  
+
+Det er også lagt en dummykolonne til testdata, som inneholder nesten - men ikke nøyaktig treff. 
+
+### Separate if - En match col
+```{r}
+
+# test data
+df <- head(dode, 10)
+df <- df %>% 
+  mutate(landb = ifelse(d_aldh == "052", "1Blyant", landb)) 
+# add dummycol
+df$dummycol <- c("1Blyant", "2Compare", "22", "avogtil", "33", "noe", "mer", "3b", "b1", "1blablaB")
+
+# finne kombikolonnenavn
+match_col <- df %>% 
+  purrr::map_df(., ~grepl("^1B$|^1C$|^2B$|^2C$|^3B$|^3C$", .x)) %>% 
+  dplyr::select(which(colSums(.) > 0)) %>% 
+  names()
+
+# feilmeldinger
+if(length(match_col) > 1) {
+  print("Mer en en kolonne inneholder hele ordet 1B, 1C, 2A eller 2C")
+}
+
+if(length(match_col) == 0){
+  print("Ingen kolonnner inneholder hele ordet 1B, 1C, 2A eller 2C")
+}
+
+# erstatte kombikolonnen med landbak og innvand,  
+# hvis det er EN match kolonne
+if(length(match_col) == 1){
+  df <- df %>% 
+  tidyr::separate(get(match_col), into = c("landbak", "innvand"), 
+                  sep = c(1), remove = TRUE, extra = "merge") %>% 
+  dplyr::mutate(innvand = ifelse(innvand == "" & landbak == 0, "0", innvand))
+}
+
+
+df
+
+# simulere fotsettelse av KHfunction 
+print("continue code")
+
+```
+
+### Separate if - Null match col
+
+Her er kombikolonnen fjernet fra testdata.  
+koden skal rapportere "ingen kolonner inneholder..." og fortsette KH funksjonen
+```{r}
+
+# test data UTEN landb
+df <- head(dode, 10)
+df <- df %>% 
+  mutate(landb = ifelse(d_aldh == "052", "1Blyant", landb)) %>% 
+  select(-landb)
+# add dummycol
+df$dummycol <- c("1Blyant", "2Compare", "22", "avogtil", "33", "noe", "mer", "3b", "B1", "1blablaB")
+
+# finne kombikolonnen
+match_col <- df %>% 
+  purrr::map_df(., ~grepl("^1B$|^1C$|^2B$|^2C$|^3B$|^3C$", .x)) %>% 
+  dplyr::select(which(colSums(.) > 0)) %>% 
+  names()
+
+# feilmeldinger
+if(length(match_col) > 1) {
+  print("Mer en en kolonne inneholder hele ordet 1B, 1C, 2B eller 2C")
+}
+
+if(length(match_col) == 0){
+  print("Ingen kolonnner inneholder hele ordet 1B, 1C, 2B eller 2C")
+}
+
+# erstatte kombikolonnen med landbak og innvand,  
+# hvis det er EN match kolonne
+if(length(match_col) == 1){
+  df <- df %>% 
+  tidyr::separate(get(match_col), into = c("landbak", "innvand"), 
+                  sep = c(1), remove = TRUE, extra = "merge") %>% 
+  dplyr::mutate(innvand = ifelse(innvand == "" & landbak == 0, "0", innvand))
+}
+
+
+df
+
+# simulere fotsettelse av KHfunction 
+print("continue code")
+
+```
+
+### Separate if - Flere match col
+
+Koden skal rapportere at "Mer en en kolonne inneholder hele ordet 1B, 1C, 2B eller 2C", og fortsette kjøringen av KH funksjonen. 
+```{r}
+
+# test data UTEN landb
+df <- head(dode, 10)
+df <- df %>% 
+  mutate(landb = ifelse(d_aldh == "052", "1Blyant", landb))
+# add dummycol
+df$dummycol <- c("1Blyant", "2Compare", "22", "avogtil", "33", "noe", "mer", "3B", "B1", "1blablaB")
+
+# finne kombikolonnen
+match_col <- df %>% 
+  purrr::map_df(., ~grepl("^1B$|^1C$|^2B$|^2C$|^3B$|^3C$", .x)) %>% 
+  dplyr::select(which(colSums(.) > 0)) %>% 
+  names()
+
+# feilmeldinger
+if(length(match_col) > 1) {
+  print("Mer en en kolonne inneholder hele ordet 1B, 1C, 2B eller 2C")
+}
+
+if(length(match_col) == 0){
+  print("Ingen kolonnner inneholder hele ordet 1B, 1C, 2B eller 2C")
+}
+
+# erstatte kombikolonnen med landbak og innvand,  
+# hvis det er EN match kolonne
+if(length(match_col) == 1){
+  df <- df %>% 
+  tidyr::separate(get(match_col), into = c("landbak", "innvand"), 
+                  sep = c(1), remove = TRUE, extra = "merge") %>% 
+  dplyr::mutate(innvand = ifelse(innvand == "" & landbak == 0, "0", innvand))
+}
+
+
+df
+
+# simulere fotsettelse av KHfunction 
+print("continue code")
+
+```
+
+
+## Possibly separate if
+
+Under testingen av 'Separate if' hendte det at feil i if statementet stoppet den simulerte fortsettelsen av KH funksjonen.  
+
+I frykt for at dette kunne skje gjentatte ganger hvis koden blir implementert i KHfunksjonen, kan 'possibly()' muligens (pun intended) være en løsning.
+
+### Possibly separate if - En match col
+```{r}
+# testdata med dummycol
+df <- head(dode, 10)
+df <- df %>% 
+  mutate(landb = ifelse(d_aldh == "052", "2AvOgTil", landb))
+df$dummycol <- c("1Blyant", "2Compare", "22", "avogtil", "33", "noe", "mer", "3b", "B1", "1blablaB")
+  
+separate_if <- function() {
+  
+  match_col <- df %>% 
+    purrr::map_df(., ~grepl("^1B$|^1C$|^2B$|^2C$|^3B$|^3C$", .x)) %>% 
+    dplyr::select(which(colSums(.) > 0)) %>% 
+    names()
+  
+  if(length(match_col) > 1) {
+    message("Mer en en kolonne inneholder hele ordet 1B, 1C, 2A eller 2C")
+  }
+  
+  if(length(match_col) == 0){
+    message("Ingen kolonnner inneholder hele ordet 1B, 1C, 2A eller 2C")
+  }
+  
+  if(length(match_col) == 1){
+    df <- df %>% 
+    tidyr::separate(get(match_col), into = c("landbak", "innvand"), 
+                    sep = c(1), remove = TRUE, extra = "merge") %>% 
+    dplyr::mutate(innvand = ifelse(innvand == "" & landbak == 0, "0", innvand))
+  }
+  
+  return(df)
+}
+
+
+possibly_separate_if <- possibly(separate_if, otherwise = "something went wrong")
+
+possibly_separate_if()
+
+# simulere fortsettelsen av KHfunction
+print("continue code")
+```
+
+### Possibly separate if - Null match col
+
+```{r}
+# Testdata uten match col
+df <- head(dode, 10)
+df <- df %>% 
+  mutate(landb = ifelse(d_aldh == "052", "2AvOgTil", landb)) %>% 
+  select(-landb)
+df$dummycol <- c("1Blyant", "2Compare", "22", "avogtil", "33", "noe", "mer", "3B", "B1", "1blablaB")
+  
+separate_if <- function() {
+  
+  match_col <- df %>% 
+    purrr::map_df(., ~grepl("^1B$|^1C$|^2B$|^2C$|^3B$|^3C$", .x)) %>% 
+    dplyr::select(which(colSums(.) > 0)) %>% 
+    names()
+  
+  if(length(match_col) > 1) {
+    message("Mer en en kolonne inneholder hele ordet 1B, 1C, 2A eller 2C")
+  }
+  
+  if(length(match_col) == 0){
+    message("Ingen kolonnner inneholder hele ordet 1B, 1C, 2A eller 2C")
+  }
+  
+  if(length(match_col) == 1){
+    df <- df %>% 
+    tidyr::separate(get(match_col), into = c("landbak", "innvand"), 
+                    sep = c(1), remove = TRUE, extra = "merge") %>% 
+    dplyr::mutate(innvand = ifelse(innvand == "" & landbak == 0, "0", innvand))
+  }
+  
+  return(df)
+}
+
+
+possibly_separate_if <- possibly(separate_if, otherwise = "something went wrong")
+
+possibly_separate_if()
+
+
+print("continue code")
+```
+
+### Possibly separate if - Flere match col
+```{r}
+# Testdata med treff i to kolonner
+df <- head(dode, 10)
+df <- df %>% 
+  mutate(landb = ifelse(d_aldh == "052", "2AvOgTil", landb))
+df$dummycol <- c("1Blyant", "2Compare", "22", "avogtil", "33", "noe", "mer", "3B", "B1", "1blablaB")
+  
+separate_if <- function() {
+  
+  match_col <- df %>% 
+    purrr::map_df(., ~grepl("^1B$|^1C$|^2B$|^2C$|^3B$|^3C$", .x)) %>%  
+    dplyr::select(which(colSums(.) > 0)) %>% 
+    names()
+  
+  if(length(match_col) > 1) {
+    message("Mer en en kolonne inneholder hele ordet 1B, 1C, 2A eller 2C")
+  }
+  
+  if(length(match_col) == 0){
+    message("Ingen kolonnner inneholder hele ordet 1B, 1C, 2A eller 2C")
+  }
+  
+  if(length(match_col) == 1){
+    df <- df %>% 
+    tidyr::separate(get(match_col), into = c("landbak", "innvand"), 
+                    sep = c(1), remove = TRUE, extra = "merge") %>% 
+    dplyr::mutate(innvand = ifelse(innvand == "" & landbak == 0, "0", innvand))
+  }
+  
+  return(df)
+}
+
+
+possibly_separate_if <- possibly(separate_if, otherwise = "something went wrong")
+
+possibly_separate_if()
+
+
+print("continue code")
+```
+
+### Possibly separate if - simulere feil
+
+'match_col' er ikke definert og vil lage en feilmelding i løpet av koden.  
+
+Likevell fortsetter simuleringen av KHfunksjonen  
+```{r}
+# Testdata med treff i to kolonner
+df <- head(dode, 10)
+df <- df %>% 
+  mutate(landb = ifelse(d_aldh == "052", "2AvOgTil", landb))
+df$dummycol <- c("1Blyant", "2Compare", "22", "avogtil", "33", "noe", "mer", "3B", "B1", "1blablaB")
+
+rm(match_col)
+  
+separate_if <- function() {
+  
+  #match_col <- df %>% 
+  #  purrr::map_df(., ~grepl("^1B$|^1C$|^2B$|^2C$|^3B$|^3C$", .x)) %>%  
+  #  dplyr::select(which(colSums(.) > 0)) %>% 
+  #  names()
+
+  if(length(match_col) > 1) {
+    message("Mer en en kolonne inneholder hele ordet 1B, 1C, 2A eller 2C")
+  }
+  
+  if(length(match_col) == 0){
+    message("Ingen kolonnner inneholder hele ordet 1B, 1C, 2A eller 2C")
+  }
+  
+  if(length(match_col) == 1){
+    df <- df %>% 
+    tidyr::separate(get(match_col), into = c("landbak", "innvand"), 
+                    sep = c(1), remove = TRUE, extra = "merge") %>% 
+    dplyr::mutate(innvand = ifelse(innvand == "" & landbak == 0, "0", innvand))
+  }
+  
+  return(df)
+}
+
+
+possibly_separate_if <- possibly(separate_if, otherwise = "something went wrong")
+
+possibly_separate_if()
+
+
+print("continue code")
+```
+
+
+
+### Separate if - simulere feil
+
+'match_col' er ikke definert og vil lage en feilmelding i løpet av koden.  
+Hele kjøringen stopper med 'Error: object 'match_col' not found"  
+```{r}
+
+# test data UTEN landb
+df <- head(dode, 10)
+df <- df %>% 
+  mutate(landb = ifelse(d_aldh == "052", "1Blyant", landb))
+# add dummycol
+df$dummycol <- c("1Blyant", "2Compare", "22", "avogtil", "33", "noe", "mer", "3B", "B1", "1blablaB")
+
+rm(match_col)
+# finne kombikolonnen
+#match_col <- df %>% 
+#  purrr::map_df(., ~grepl("^1B$|^1C$|^2B$|^2C$|^3B$|^3C$", .x)) %>% 
+#  dplyr::select(which(colSums(.) > 0)) %>% 
+#  names()
+
+# feilmeldinger
+if(length(match_col) > 1) {
+  print("Mer en en kolonne inneholder hele ordet 1B, 1C, 2B eller 2C")
+}
+
+if(length(match_col) == 0){
+  print("Ingen kolonnner inneholder hele ordet 1B, 1C, 2B eller 2C")
+}
+
+# erstatte kombikolonnen med landbak og innvand,  
+# hvis det er EN match kolonne
+if(length(match_col) == 1){
+  df <- df %>% 
+  tidyr::separate(get(match_col), into = c("landbak", "innvand"), 
+                  sep = c(1), remove = TRUE, extra = "merge") %>% 
+  dplyr::mutate(innvand = ifelse(innvand == "" & landbak == 0, "0", innvand))
+}
+
+
+df
+
+# simulere fotsettelse av KHfunction 
+print("continue code")
+
+```
