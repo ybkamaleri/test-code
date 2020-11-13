@@ -31,3 +31,11 @@ Raw data for 2 GEO som eksample. De ser slik ut:
 #+end_example
 
 For å hente =csv= filer, kan leses fra denne [[https://github.com/ybkamaleri/test-code/tree/main/standard][Github]] side.
+
+*Direct standardisering*
+
+Rate pr. 1000 for GEO 30 er =12.11991= mens GEO 50 er =10.65332=
+
+*Indirekt standardisering*
+
+Med SMR for GEO 30 som er =1.061= blir raten =12.09= og GEO 50 har SMR =0.932= og raten =10.612=.

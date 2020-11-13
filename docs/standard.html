@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="no" xml:lang="no">
 <head>
-<!-- 2020-11-13 fre. 13:44 -->
+<!-- 2020-11-13 fre. 15:15 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Standardisering</title>
@@ -233,19 +233,19 @@
 <h2>Innhold</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org89cc984">1. Raw data</a></li>
+<li><a href="#orge74591a">1. Raw data</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org89cc984" class="outline-2">
-<h2 id="org89cc984"><span class="section-number-2">1</span> Raw data</h2>
+<div id="outline-container-orge74591a" class="outline-2">
+<h2 id="orge74591a"><span class="section-number-2">1</span> Raw data</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Raw data for 2 GEO som eksample. De ser slik ut:
 </p>
 
-<pre class="example" id="org6c646d4">
+<pre class="example" id="org23ad9d9">
 &gt; dt30
 GEO ALDER TELLER     RATE i.GEO case    i.RATE     crude
 1:  30 15_19  37051 6.060799    30  177  4.768512  4.777199
@@ -266,6 +266,22 @@ GEO ALDER TELLER     RATE i.GEO case    i.RATE     crude
 
 <p>
 For å hente <code>csv</code> filer, kan leses fra denne <a href="https://github.com/ybkamaleri/test-code/tree/main/standard">Github</a> side.
+</p>
+
+<p>
+<b>Direct standardisering</b>
+</p>
+
+<p>
+Rate pr. 1000 for GEO 30 er <code>12.11991</code> mens GEO 50 er <code>10.65332</code>
+</p>
+
+<p>
+<b>Indirekt standardisering</b>
+</p>
+
+<p>
+Med SMR for GEO 30 som er <code>1.061</code> blir raten <code>12.09</code> og GEO 50 har SMR <code>0.932</code> og raten <code>10.612</code>.
 </p>
 </div>
 </div>
