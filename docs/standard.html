@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="no" xml:lang="no">
 <head>
-<!-- 2020-11-15 s¯n. 15:02 -->
+<!-- 2020-11-15 s¯n. 15:25 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Standardisering</title>
@@ -233,19 +233,19 @@
 <h2>Innhold</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgd40ae67">1. Raw data</a></li>
+<li><a href="#org80eda1b">1. Raw data</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgd40ae67" class="outline-2">
-<h2 id="orgd40ae67"><span class="section-number-2">1</span> Raw data</h2>
+<div id="outline-container-org80eda1b" class="outline-2">
+<h2 id="org80eda1b"><span class="section-number-2">1</span> Raw data</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Raw data for 2 GEO som eksample. De ser slik ut:
 </p>
 
-<pre class="example" id="orgdd29fb2">
+<pre class="example" id="orgb727394">
 &gt; dt30
    GEO ALDER TELLER     RATE i.GEO case    i.RATE     crude
 1:  30 15_19  37051 6.060799    30  177  4.768512  4.777199
@@ -268,7 +268,7 @@ Raw data for 2 GEO som eksample. De ser slik ut:
 Standard populasjon som brukes er:
 </p>
 
-<pre class="example" id="org9eca3e1">
+<pre class="example" id="orgd8b0e15">
    GEO ALDER TELLER     RATE i.GEO case    i.RATE     crude
 1:   0 15_19 155334 5.876876     0  745  4.802733  4.796117
 2:   0 20_24 164895 6.238605     0 2445 14.843521 14.827618
@@ -303,6 +303,14 @@ Rate pr. 1000 for GEO 30 er <code>12.11991</code> mens GEO 50 er <code>10.65332<
 
 <p>
 Med SMR for GEO 30 som er <code>1.061</code> blir raten <code>12.09</code> og GEO 50 har SMR <code>0.932</code> og raten <code>10.612</code>.
+</p>
+
+<p>
+<b>Analyser</b>
+</p>
+
+<p>
+Analysen er gjort i R og kan leses <a href="https://github.com/ybkamaleri/test-code/blob/main/standard/standard.R#L91">p√• denne siden</a>. Det er gjort b√•de manuelt og ved bruk av <a href="https://cran.r-project.org/web/packages/epitools/index.html">epitools</a> pakke.
 </p>
 </div>
 </div>

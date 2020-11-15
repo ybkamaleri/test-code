@@ -56,3 +56,7 @@ Rate pr. 1000 for GEO 30 er =12.11991= mens GEO 50 er =10.65332=
 *Indirekte standardisering*
 
 Med SMR for GEO 30 som er =1.061= blir raten =12.09= og GEO 50 har SMR =0.932= og raten =10.612=.
+
+*Analyser*
+
+Analysen er gjort i R og kan leses [[https://github.com/ybkamaleri/test-code/blob/main/standard/standard.R#L91][på denne siden]]. Det er gjort både manuelt og ved bruk av [[https://cran.r-project.org/web/packages/epitools/index.html][epitools]] pakke.
