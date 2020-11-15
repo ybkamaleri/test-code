@@ -123,7 +123,7 @@ dirStd <- ageadjust.direct(count = dt3$case,
 round(1e3 * dirStd, 2)
 
 
-## target population 30
+## target population GEO30
 dt30
 dt30[, sum(case) / sum(TELLER) * 1000]
 colt <- c("ALDER","case", "crude")
@@ -133,7 +133,7 @@ DT30[, exp_nr := (crude / 1000) * TELLER ][]
 ## rate per 1000
 DT30[, sum(exp_nr, na.rm = TRUE) / sum(TELLER, na.rm = TRUE) * 1000]
 
-## target population 50
+## target population GEO50
 dt50
 dt50[, sum(case) / sum(TELLER) * 1000]
 colt <- c("ALDER","case", "crude")
@@ -155,7 +155,6 @@ smr_conf =  function(observed, predicted){
   upper = ((sqrt(observed) + 1.96*0.5)^2)/ predicted
 
   return(c(lower, upper))
-
 }
 
 smr_ci <- function(smr, observed){
@@ -200,9 +199,7 @@ round(indStdxx$sir, 2) #standardized incidence ratio (SMR)
 round(1e3 * indStdxx$rate, 1)
 
 
-
-
-
+## GEO30
 dt30
 dt30i <- subset(dt30, select = incol);dt30i
 dt30i[DTi, on = "ALDER", crude := crude]; dt30i
@@ -213,7 +210,7 @@ smr30i <- dt30i[, sum(case) / sum(exp_nr)];smr30i
 refCrude
 refCrude * smr30i
 
-
+## GEO50
 dt50
 dt50i <- subset(dt50, select = incol);dt50i
 dt50i[DTi, on = "ALDER", crude := crude]; dt50i
