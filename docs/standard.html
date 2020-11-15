@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="no" xml:lang="no">
 <head>
-<!-- 2020-11-13 fre. 15:15 -->
+<!-- 2020-11-15 s�n. 15:02 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Standardisering</title>
@@ -233,21 +233,21 @@
 <h2>Innhold</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orge74591a">1. Raw data</a></li>
+<li><a href="#orgd40ae67">1. Raw data</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orge74591a" class="outline-2">
-<h2 id="orge74591a"><span class="section-number-2">1</span> Raw data</h2>
+<div id="outline-container-orgd40ae67" class="outline-2">
+<h2 id="orgd40ae67"><span class="section-number-2">1</span> Raw data</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Raw data for 2 GEO som eksample. De ser slik ut:
 </p>
 
-<pre class="example" id="org23ad9d9">
+<pre class="example" id="orgdd29fb2">
 &gt; dt30
-GEO ALDER TELLER     RATE i.GEO case    i.RATE     crude
+   GEO ALDER TELLER     RATE i.GEO case    i.RATE     crude
 1:  30 15_19  37051 6.060799    30  177  4.768512  4.777199
 2:  30 20_24  32828 5.370001    30  499 15.133824 15.200439
 3:  30 25_29  34457 5.636473    30  669 19.456630 19.415503
@@ -255,7 +255,7 @@ GEO ALDER TELLER     RATE i.GEO case    i.RATE     crude
 5:  30 35_39  40201 6.576076    30  453 11.198042 11.268376
 6:  30 40_44  42423 6.939551    30  190  4.508994  4.478703
 &gt; dt50
-GEO ALDER TELLER     RATE i.GEO case    i.RATE     crude
+   GEO ALDER TELLER     RATE i.GEO case    i.RATE     crude
 1:  50 15_19  13520 5.897440    50   75  5.560911  5.547337
 2:  50 20_24  16125 7.033745    50  205 12.799034 12.713178
 3:  50 25_29  16537 7.213459    50  248 14.965152 14.996674
@@ -265,11 +265,32 @@ GEO ALDER TELLER     RATE i.GEO case    i.RATE     crude
 </pre>
 
 <p>
-For å hente <code>csv</code> filer, kan leses fra denne <a href="https://github.com/ybkamaleri/test-code/tree/main/standard">Github</a> side.
+Standard populasjon som brukes er:
 </p>
 
+<pre class="example" id="org9eca3e1">
+   GEO ALDER TELLER     RATE i.GEO case    i.RATE     crude
+1:   0 15_19 155334 5.876876     0  745  4.802733  4.796117
+2:   0 20_24 164895 6.238605     0 2445 14.843521 14.827618
+3:   0 25_29 181578 6.869786     0 3131 17.262911 17.243278
+4:   0 30_34 178708 6.761203     0 2714 15.002266 15.186785
+5:   0 35_39 170931 6.466970     0 1903 11.069349 11.133147
+6:   0 40_44 170461 6.449188     0  704  4.150099  4.129977
+</pre>
+
 <p>
-<b>Direct standardisering</b>
+For å hente <code>csv</code> filer, kan leses fra denne <a href="https://github.com/ybkamaleri/test-code/tree/main/standard">Github</a> side. De er:
+</p>
+
+<ul class="org-ul">
+<li>DataGeo30.csv</li>
+<li>DataGeo50.csv</li>
+<li>Standard-pop.csv</li>
+</ul>
+
+
+<p>
+<b>Direkte standardisering</b>
 </p>
 
 <p>
@@ -277,7 +298,7 @@ Rate pr. 1000 for GEO 30 er <code>12.11991</code> mens GEO 50 er <code>10.65332<
 </p>
 
 <p>
-<b>Indirekt standardisering</b>
+<b>Indirekte standardisering</b>
 </p>
 
 <p>

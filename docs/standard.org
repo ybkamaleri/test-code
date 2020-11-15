@@ -13,7 +13,7 @@ Raw data for 2 GEO som eksample. De ser slik ut:
 
 #+begin_example
   > dt30
-  GEO ALDER TELLER     RATE i.GEO case    i.RATE     crude
+     GEO ALDER TELLER     RATE i.GEO case    i.RATE     crude
   1:  30 15_19  37051 6.060799    30  177  4.768512  4.777199
   2:  30 20_24  32828 5.370001    30  499 15.133824 15.200439
   3:  30 25_29  34457 5.636473    30  669 19.456630 19.415503
@@ -21,7 +21,7 @@ Raw data for 2 GEO som eksample. De ser slik ut:
   5:  30 35_39  40201 6.576076    30  453 11.198042 11.268376
   6:  30 40_44  42423 6.939551    30  190  4.508994  4.478703
   > dt50
-  GEO ALDER TELLER     RATE i.GEO case    i.RATE     crude
+     GEO ALDER TELLER     RATE i.GEO case    i.RATE     crude
   1:  50 15_19  13520 5.897440    50   75  5.560911  5.547337
   2:  50 20_24  16125 7.033745    50  205 12.799034 12.713178
   3:  50 25_29  16537 7.213459    50  248 14.965152 14.996674
@@ -30,12 +30,29 @@ Raw data for 2 GEO som eksample. De ser slik ut:
   6:  50 40_44  13851 6.041823    50   47  3.419301  3.393257
 #+end_example
 
-For å hente =csv= filer, kan leses fra denne [[https://github.com/ybkamaleri/test-code/tree/main/standard][Github]] side.
+Standard populasjon som brukes er:
 
-*Direct standardisering*
+#+begin_example
+     GEO ALDER TELLER     RATE i.GEO case    i.RATE     crude
+  1:   0 15_19 155334 5.876876     0  745  4.802733  4.796117
+  2:   0 20_24 164895 6.238605     0 2445 14.843521 14.827618
+  3:   0 25_29 181578 6.869786     0 3131 17.262911 17.243278
+  4:   0 30_34 178708 6.761203     0 2714 15.002266 15.186785
+  5:   0 35_39 170931 6.466970     0 1903 11.069349 11.133147
+  6:   0 40_44 170461 6.449188     0  704  4.150099  4.129977
+#+end_example 
+
+For å hente =csv= filer, kan leses fra denne [[https://github.com/ybkamaleri/test-code/tree/main/standard][Github]] side. De er:
+
+- DataGeo30.csv
+- DataGeo50.csv
+- Standard-pop.csv
+
+
+*Direkte standardisering*
 
 Rate pr. 1000 for GEO 30 er =12.11991= mens GEO 50 er =10.65332=
 
-*Indirekt standardisering*
+*Indirekte standardisering*
 
 Med SMR for GEO 30 som er =1.061= blir raten =12.09= og GEO 50 har SMR =0.932= og raten =10.612=.

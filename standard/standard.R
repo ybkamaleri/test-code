@@ -115,6 +115,7 @@ DT3[, exp_nr := (crude / 1000) * TELLER ][]
 ## rate per 1000
 DT3[, sum(exp_nr) / sum(TELLER) * 1000]
 
+
 library(epitools)
 dirStd <- ageadjust.direct(count = dt3$case,
                            pop = dt3$TELLER,
