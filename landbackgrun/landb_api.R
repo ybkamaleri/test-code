@@ -1,6 +1,7 @@
 ### Invandring and invandrere
 ### -------------------------
 library(klassR)
+ListFamily()
 ListFamily(family = 8) #Invandring family
 GetFamily(klass = 82) #klass is klass_nr and not klass_name
 
