@@ -57,21 +57,22 @@ sdata <- function(x, y, geo = NULL, yrGp, yrEx){
 
   colnm <- c("GEO", "ALDER", "TELLER", "RATE")
   yr <- "2019_2019"
-
+  
   DT <- data.table::fread(file.path(rootPath, x))
   dt <- data.table::fread(file.path(rootPath, y))
   
-  DTR <- DT[GEO == geo & ALDER %chin% yrGp & AAR == yr, ]
+  DTR <- DT[GEO %in% geo & ALDER %chin% yrGp & AAR == yr, ]
   Dtw <- DTR[, .(Total = sum(TELLER, na.rm = TRUE)), by = KJONN]
 
   DTs <- subset(DTR, KJONN == 2, select = colnm)
   ## DTW <- rbindlist(list(DTs, list(geo, "15_49", Dtw$Total[Dtw$KJONN == 2])), fill = TRUE)
 
-  dtn <- subset(dt, GEO == geo & AAR == yr & !(ALDER %chin% yrEx), select = colnm)
+  dtn <- subset(dt, GEO %in% geo & AAR == yr & !(ALDER %chin% yrEx), select = colnm)
   
-  DTN <- DTs[dtn, on = "ALDER"]
+  DTN <- DTs[dtn, on = c("GEO", "ALDER")]
   DTN[, crude := (i.TELLER / TELLER) * 1000]
   setnames(DTN, "i.TELLER", "case")
+  DTN[, c("RATE", "i.RATE") := NULL]
   DTN[]
 }
 
@@ -79,6 +80,13 @@ dtNorge <- sdata(norskBef, fileExp, geo = 0, yrGp, yrEx);dtNorge
 dt3 <- sdata(norskBef, fileExp, geo = 3, yrGp, yrEx);dt3
 dt30 <- sdata(norskBef, fileExp, geo = 30, yrGp, yrEx);dt30
 dt50 <- sdata(norskBef, fileExp, geo = 50, yrGp, yrEx);dt50
+
+## Get severals GEO codes
+geoList <- unique(dt$GEO)
+dtAlle <- sdata(norskBef, fileExp, geo = geoList, yrGp, yrEx);dtAlle
+## fwrite(dtAlle, "TestData.csv")
+
+
 
 ## dput(setDF(dtNorge), "dtNorge.txt")
 ## dput(setDF(dt3), "dt3.txt")
