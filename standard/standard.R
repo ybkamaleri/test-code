@@ -123,6 +123,26 @@ DT3[, exp_nr := (crude / 1000) * TELLER ][]
 ## rate per 1000
 DT3[, sum(exp_nr) / sum(TELLER) * 1000]
 
+## CI for Direct standardization
+alpha <- 1 - 0.95
+cruderate <- sum(dt3$case) / sum(dt3$TELLER)
+stdwt <- dtNorge$TELLER / sum(dtNorge$TELLER)
+rate <- dt3$case / dt3$TELLER
+dsr <- sum(stdwt * rate)
+dsr.var <- sum((stdwt ^ 2) * (dt3$case / dt3$TELLER ^ 2))
+wm <- max(stdwt / dt3$TELLER)
+lci <- qgamma(alpha / 2, shape = (dsr ^ 2) / dsr.var, scale = dsr.var / dsr)
+uci <- qgamma(1 - alpha/2, shape = ((dsr+wm)^2)/(dsr.var+wm^2), 
+              scale = (dsr.var+wm^2)/(dsr+wm))
+
+lci * 1e3
+uci * 1e3
+
+source("direct-ci.R")
+direct_ci(count = dt3$case,
+          pop = dt3$TELLER,
+          stdpop = dtNorge$TELLER)
+
 
 library(epitools)
 dirStd <- ageadjust.direct(count = dt3$case,
