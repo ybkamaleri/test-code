@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="no" xml:lang="no">
 <head>
-<!-- 2020-11-15 s�n. 15:25 -->
+<!-- 2020-11-20 fre. 16:49 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Standardisering</title>
@@ -192,17 +192,6 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/styles/bigblow/css/htmlize.css"/>
-<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/styles/bigblow/css/bigblow.css"/>
-<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/styles/bigblow/css/hideshow.css"/>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/styles/bigblow/js/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/styles/bigblow/js/jquery.localscroll-min.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/styles/bigblow/js/jquery.zclip.min.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/styles/bigblow/js/bigblow.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/styles/bigblow/js/hideshow.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/styles/lib/js/jquery.stickytableheaders.min.js"></script>
 <script type="text/javascript">
 // @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
@@ -233,19 +222,20 @@
 <h2>Innhold</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org80eda1b">1. Raw data</a></li>
+<li><a href="#orgca5d93e">1. Raw data</a></li>
+<li><a href="#org073d995">2. Analyser</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org80eda1b" class="outline-2">
-<h2 id="org80eda1b"><span class="section-number-2">1</span> Raw data</h2>
+<div id="outline-container-orgca5d93e" class="outline-2">
+<h2 id="orgca5d93e"><span class="section-number-2">1</span> Raw data</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Raw data for 2 GEO som eksample. De ser slik ut:
 </p>
 
-<pre class="example" id="orgb727394">
+<pre class="example" id="org671befb">
 &gt; dt30
    GEO ALDER TELLER     RATE i.GEO case    i.RATE     crude
 1:  30 15_19  37051 6.060799    30  177  4.768512  4.777199
@@ -268,7 +258,7 @@ Raw data for 2 GEO som eksample. De ser slik ut:
 Standard populasjon som brukes er:
 </p>
 
-<pre class="example" id="orgd8b0e15">
+<pre class="example" id="orgff80841">
    GEO ALDER TELLER     RATE i.GEO case    i.RATE     crude
 1:   0 15_19 155334 5.876876     0  745  4.802733  4.796117
 2:   0 20_24 164895 6.238605     0 2445 14.843521 14.827618
@@ -312,6 +302,82 @@ Med SMR for GEO 30 som er <code>1.061</code> blir raten <code>12.09</code> og GE
 <p>
 Analysen er gjort i R og kan leses <a href="https://github.com/ybkamaleri/test-code/blob/main/standard/standard.R#L91">på denne siden</a>. Det er gjort både manuelt og ved bruk av <a href="https://cran.r-project.org/web/packages/epitools/index.html">epitools</a> pakke.
 </p>
+</div>
+</div>
+
+<div id="outline-container-org073d995" class="outline-2">
+<h2 id="org073d995"><span class="section-number-2">2</span> Analyser</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Direkte standardisering med CI for utvalgte fylker
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">$geo_3
+   geo crude   adj   lci   uci
+1:   3 13.34 12.57 12.03 13.12
+
+$geo_11
+   geo crude  adj  lci   uci
+1:  11  9.32 9.38 8.77 10.03
+
+$geo_15
+   geo crude  adj  lci uci
+1:  15  8.86 9.08 8.23  10
+
+$geo_42
+   geo crude  adj  lci   uci
+1:  42  9.34 9.58 8.79 10.43
+
+$geo_46
+   geo crude  adj  lci   uci
+1:  46 10.02 9.99 9.44 10.57
+
+$geo_30
+   geo crude   adj   lci  uci
+1:  30 11.59 12.12 11.66 12.6
+
+$geo_50
+   geo crude   adj  lci   uci
+1:  50 10.78 10.65 9.99 11.35
+</pre>
+</div>
+
+<p>
+Indirekte standardisering med CI
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">$geo_3
+   geo crude   adj   lci   uci
+1:   3 13.34 12.26 11.76 12.78
+
+$geo_11
+   geo crude adj lci   uci
+1:  11  9.32 9.4 8.8 10.05
+
+$geo_15
+   geo crude  adj  lci  uci
+1:  15  8.86 9.06 8.23 9.98
+
+$geo_42
+   geo crude  adj  lci   uci
+1:  42  9.34 9.51 8.74 10.35
+
+$geo_46
+   geo crude  adj  lci   uci
+1:  46 10.02 9.99 9.45 10.56
+
+$geo_30
+   geo crude   adj   lci   uci
+1:  30 11.59 12.09 11.63 12.56
+
+$geo_50
+   geo crude   adj  lci   uci
+1:  50 10.78 10.62 9.97 11.31
+
+</pre>
+</div>
 </div>
 </div>
 </div>

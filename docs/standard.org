@@ -60,3 +60,71 @@ Med SMR for GEO 30 som er =1.061= blir raten =12.09= og GEO 50 har SMR =0.932= o
 *Analyser*
 
 Analysen er gjort i R og kan leses [[https://github.com/ybkamaleri/test-code/blob/main/standard/standard.R#L91][på denne siden]]. Det er gjort både manuelt og ved bruk av [[https://cran.r-project.org/web/packages/epitools/index.html][epitools]] pakke.
+
+* Analyser
+
+Direkte standardisering med CI for utvalgte fylker
+
+#+BEGIN_SRC R
+  $geo_3
+     geo crude   adj   lci   uci
+  1:   3 13.34 12.57 12.03 13.12
+
+  $geo_11
+     geo crude  adj  lci   uci
+  1:  11  9.32 9.38 8.77 10.03
+
+  $geo_15
+     geo crude  adj  lci uci
+  1:  15  8.86 9.08 8.23  10
+
+  $geo_42
+     geo crude  adj  lci   uci
+  1:  42  9.34 9.58 8.79 10.43
+
+  $geo_46
+     geo crude  adj  lci   uci
+  1:  46 10.02 9.99 9.44 10.57
+
+  $geo_30
+     geo crude   adj   lci  uci
+  1:  30 11.59 12.12 11.66 12.6
+
+  $geo_50
+     geo crude   adj  lci   uci
+  1:  50 10.78 10.65 9.99 11.35
+#+END_SRC
+
+Indirekte standardisering med CI
+
+#+BEGIN_SRC R
+  $geo_3
+     geo crude   adj   lci   uci
+  1:   3 13.34 12.26 11.76 12.78
+
+  $geo_11
+     geo crude adj lci   uci
+  1:  11  9.32 9.4 8.8 10.05
+
+  $geo_15
+     geo crude  adj  lci  uci
+  1:  15  8.86 9.06 8.23 9.98
+
+  $geo_42
+     geo crude  adj  lci   uci
+  1:  42  9.34 9.51 8.74 10.35
+
+  $geo_46
+     geo crude  adj  lci   uci
+  1:  46 10.02 9.99 9.45 10.56
+
+  $geo_30
+     geo crude   adj   lci   uci
+  1:  30 11.59 12.09 11.63 12.56
+
+  $geo_50
+     geo crude   adj  lci   uci
+  1:  50 10.78 10.62 9.97 11.31
+
+#+END_SRC
+
