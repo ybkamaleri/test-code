@@ -5,7 +5,13 @@
 #+OPTIONS: html-postamble:nil
 #+LANGUAGE: no
 
-#+SETUPFILE: https://fniessen.github.io/org-html-themes/setup/theme-bigblow.setup
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/styles/readtheorg/css/htmlize.css"/>
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/styles/readtheorg/css/readtheorg.css"/>
+
+#+HTML_HEAD: <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+#+HTML_HEAD: <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="https://fniessen.github.io/org-html-themes/styles/lib/js/jquery.stickytableheaders.min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="https://fniessen.github.io/org-html-themes/styles/readtheorg/js/readtheorg.js"></script>
 
 * Raw data
 
@@ -48,6 +54,7 @@ For å hente =csv= filer, kan leses fra denne [[https://github.com/ybkamaleri/te
 - DataGeo50.csv
 - Standard-pop.csv
 
+* Standardisering
 
 *Direkte standardisering*
 
@@ -127,4 +134,20 @@ Indirekte standardisering med CI
   1:  50 10.78 10.62 9.97 11.31
 
 #+END_SRC
+* CI
+CI regnet ut basert på metoden i =epitools= pakke. Denne er for direkte standardisering:
 
+#+BEGIN_SRC R
+  alpha <- 1 - 0.95
+  cruderate <- sum(dt3$case) / sum(dt3$TELLER)
+  stdwt <- dtNorge$TELLER / sum(dtNorge$TELLER)
+  rate <- dt3$case / dt3$TELLER
+  dsr <- sum(stdwt * rate)
+  dsr.var <- sum((stdwt ^ 2) * (dt3$case / dt3$TELLER ^ 2))
+  wm <- max(stdwt / dt3$TELLER)
+  lci <- qgamma(alpha / 2, shape = (dsr ^ 2) / dsr.var, scale = dsr.var / dsr)
+  uci <- qgamma(1 - alpha/2, shape = ((dsr+wm)^2)/(dsr.var+wm^2), 
+                scale = (dsr.var+wm^2)/(dsr+wm))
+#+END_SRC
+
+For indirekte standardisering kan ses [[https://github.com/ybkamaleri/test-code/blob/main/standard/standard.R#L176][her]].
