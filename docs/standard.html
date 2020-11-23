@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="no" xml:lang="no">
 <head>
-<!-- 2020-11-20 fre. 17:00 -->
+<!-- 2020-11-23 man. 11:04 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Standardisering</title>
@@ -192,12 +192,12 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/styles/readtheorg/css/htmlize.css"/>
-<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/styles/lib/js/jquery.stickytableheaders.min.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
 <script type="text/javascript">
 // @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
@@ -228,22 +228,22 @@
 <h2>Innhold</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org7f180a8">1. Raw data</a></li>
-<li><a href="#orga6c4c60">2. Standardisering</a></li>
-<li><a href="#org2ae8684">3. Analyser</a></li>
-<li><a href="#orgb5f6f09">4. CI</a></li>
+<li><a href="#orgcd68fee">1. Raw data</a></li>
+<li><a href="#org7b7f539">2. Standardisering</a></li>
+<li><a href="#org75bb5c2">3. Analyser</a></li>
+<li><a href="#orge4b39bb">4. CI</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org7f180a8" class="outline-2">
-<h2 id="org7f180a8"><span class="section-number-2">1</span> Raw data</h2>
+<div id="outline-container-orgcd68fee" class="outline-2">
+<h2 id="orgcd68fee"><span class="section-number-2">1</span> Raw data</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Raw data for 2 GEO som eksample. De ser slik ut:
 </p>
 
-<pre class="example" id="orgbfe9f1d">
+<pre class="example" id="org8435e82">
 &gt; dt30
    GEO ALDER TELLER     RATE i.GEO case    i.RATE     crude
 1:  30 15_19  37051 6.060799    30  177  4.768512  4.777199
@@ -266,7 +266,7 @@ Raw data for 2 GEO som eksample. De ser slik ut:
 Standard populasjon som brukes er:
 </p>
 
-<pre class="example" id="org8f90cb2">
+<pre class="example" id="orgda5bd87">
    GEO ALDER TELLER     RATE i.GEO case    i.RATE     crude
 1:   0 15_19 155334 5.876876     0  745  4.802733  4.796117
 2:   0 20_24 164895 6.238605     0 2445 14.843521 14.827618
@@ -288,8 +288,8 @@ For å hente <code>csv</code> filer, kan leses fra denne <a href="https://github
 </div>
 </div>
 
-<div id="outline-container-orga6c4c60" class="outline-2">
-<h2 id="orga6c4c60"><span class="section-number-2">2</span> Standardisering</h2>
+<div id="outline-container-org7b7f539" class="outline-2">
+<h2 id="org7b7f539"><span class="section-number-2">2</span> Standardisering</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 <b>Direkte standardisering</b>
@@ -317,8 +317,8 @@ Analysen er gjort i R og kan leses <a href="https://github.com/ybkamaleri/test-c
 </div>
 </div>
 
-<div id="outline-container-org2ae8684" class="outline-2">
-<h2 id="org2ae8684"><span class="section-number-2">3</span> Analyser</h2>
+<div id="outline-container-org75bb5c2" class="outline-2">
+<h2 id="org75bb5c2"><span class="section-number-2">3</span> Analyser</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Direkte standardisering med CI for utvalgte fylker
@@ -392,8 +392,8 @@ $geo_50
 </div>
 </div>
 </div>
-<div id="outline-container-orgb5f6f09" class="outline-2">
-<h2 id="orgb5f6f09"><span class="section-number-2">4</span> CI</h2>
+<div id="outline-container-orge4b39bb" class="outline-2">
+<h2 id="orge4b39bb"><span class="section-number-2">4</span> CI</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 CI regnet ut basert på metoden i <code>epitools</code> pakke. Denne er for direkte standardisering:
