@@ -1,3 +1,4 @@
+## For testing with Azure
 testUI <- function(id){
   # create the namespace from the id
   ns <- NS(id)
