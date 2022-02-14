@@ -4,6 +4,12 @@ pyes <- suppressWarnings(sapply(pkg, require, character.only = TRUE))
 pno <- pkg[!pyes]
 install.packages(pno)
 
+dt <-   fread("testdata.csv")
+
+
+
+
+## Create test data --------
 path <- "/mnt/F/Forskningsprosjekter/PDB 2455 - Helseprofiler og til_/PRODUKSJON/PRODUKTER/KUBER/KOMMUNEHELSA/KH2021NESSTAR"
 file01 <- "ARBLEDIGE_2021-08-16-15-17.csv"
 df <- fread(file.path(path, file01))
